@@ -1,0 +1,99 @@
+
+
+# Import necessary libraries
+import matplotlib.pyplot as plt
+import os
+import cv2
+from collections import Counter
+import numpy as np
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+from wordcloud import WordCloud
+from sklearn.decomposition import PCA
+import statsmodels.api as sm
+
+# Set the path to your dataset directory
+data_directory = r"C:\Users\yoges\OneDrive\Desktop\100000"
+
+# Lists to store age and gender information
+ages = []
+genders = []
+
+# Iterate through all files in the dataset directory
+for filename in os.listdir(data_directory):
+    if filename.endswith(".jpg") or filename.endswith(".png"):
+        try:
+            parts = filename.split('_')
+            if len(parts) < 2:
+                print(f"Skipping file due to unexpected format: {filename}")
+                continue
+            age, gender = parts[0], parts[1]
+            ages.append(int(age))
+            genders.append(int(gender))
+            # Debug output
+            print(f"Processing file: {filename}, Age: {age}, Gender: {gender}")
+        except ValueError as e:
+            print(f"Error processing file: {filename}, Error: {e}")
+
+# Print lengths of the lists
+print(f"Length of ages list: {len(ages)}")
+print(f"Length of genders list: {len(genders)}")
+
+
+
+# Count the occurrences of each age and gender
+age_counter = Counter(ages)
+gender_counter = Counter(genders)
+
+# Plotting Age Distribution
+plt.figure(figsize=(10, 5))
+plt.bar(age_counter.keys(), age_counter.values())
+plt.title('Age Distribution')
+plt.xlabel('Ages')
+plt.ylabel('Number of Images')
+plt.show()
+
+# Box Plot for Age
+plt.figure(figsize=(10, 5))
+sns.boxplot(x=ages)
+plt.title('Age Box Plot')
+plt.xlabel('Age')
+plt.show()
+
+
+# Plotting Gender Distribution
+labels = ['Male', 'Female']
+sizes = [gender_counter[0], gender_counter[1]]
+plt.figure(figsize=(5, 5))
+plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt.title('Gender Distribution')
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
